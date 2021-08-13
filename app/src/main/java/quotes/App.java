@@ -59,7 +59,6 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println("Quote Of The Day:");
-        System.out.println("Quote Of The Day:");
         System.out.println(new App().getGreeting());
     }
 }
