@@ -12,10 +12,12 @@ import com.google.gson.reflect.TypeToken;
 
 public class App {
     public ArrayList<Quote> quotes = new ArrayList<Quote>();
-    public Quote[] q;
 
     public void quotesFileToQuotesArray(String filename){
         //get json from file and convert to POJO:
+        //note that it doesn't return an Array, but modifies
+        //the public quotes array in the class.
+
         try {
             // create Gson instance
             Gson gson = new Gson();
@@ -23,13 +25,12 @@ public class App {
             // create a reader
             Reader reader = Files.newBufferedReader(Paths.get(filename));
 
+            //This line from googling gets the correct type for an ArrayList<Quote>
             Type QuoteListType = new TypeToken<ArrayList<Quote>>(){}.getType();
 
             // convert JSON string to User object
              quotes = gson.fromJson(reader, QuoteListType);
-             for(Quote ea:quotes){
-             //    System.out.println(ea.text);
-             }
+
             // close reader
             reader.close();
 
@@ -39,12 +40,8 @@ public class App {
 
     }
     public String getRandomQuote(ArrayList<Quote> _quoteArray){
-        //System.out.print("Array Count");
-       // System.out.println(Integer.toString((int) (Math.random() * _quoteArray.stream().count())));
         int randomIndex = (int) (Math.random() * _quoteArray.stream().count());
 
-        //System.out.print("ArrayIndex:");
-        //System.out.println(randomIndex);
         return _quoteArray.get(randomIndex).toString();
     }
 
@@ -53,7 +50,6 @@ public class App {
         try {
             quotesFileToQuotesArray( "./src/main/resources/recentquotes.json");
         } catch (Exception e) {
-            System.out.println("Working Directory = " + System.getProperty("user.dir"));
             System.out.println(e.toString());
         }
         String greeting = getRandomQuote(quotes);
@@ -62,7 +58,6 @@ public class App {
     }
 
     public static void main(String[] args) {
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
         System.out.println("Quote Of The Day:");
         System.out.println(new App().getGreeting());
     }
