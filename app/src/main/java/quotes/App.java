@@ -28,8 +28,9 @@ public class App {
             //This line from googling gets the correct type for an ArrayList<Quote>
             Type QuoteListType = new TypeToken<ArrayList<Quote>>(){}.getType();
 
-            // convert JSON string to User object
+            // convert JSON file to ArrayList of Quote object
              quotes = gson.fromJson(reader, QuoteListType);
+
 
             // close reader
             reader.close();
