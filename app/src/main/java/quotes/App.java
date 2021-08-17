@@ -56,6 +56,8 @@ public class App {
 
     //Populate from API
     public String apiToQuote() throws IOException, InterruptedException {
+        String result = new String();
+
         Gson gson = new Gson();
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(
@@ -67,11 +69,14 @@ public class App {
                 client.send(request, HttpResponse.BodyHandlers.ofString());
 
    //     System.out.println("HERE:" + response.body());
-
-        QuoteOfTheDay gotd = gson.fromJson(response.body(),QuoteOfTheDay.class);
-
+        try {
+            QuoteOfTheDay gotd = gson.fromJson(response.body(), QuoteOfTheDay.class);
+            result = gotd.quote.body + "\n"+"--" + gotd.quote.author;
+        } catch (Exception e) {
+           result = "";
+        }
        // System.out.println("HERE TWO:" + gotd.quote.body);
-        return gotd.quote.body + "\n"+"--" + gotd.quote.author;
+        return result;
     }
 
 
