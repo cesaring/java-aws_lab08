@@ -4,19 +4,22 @@
 package quotes;
 
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
     @Test
-     void appHasAGreeting() {
+     void appHasAGreeting() throws IOException, InterruptedException {
         App classUnderTest = new App();
 
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+        assertNotNull(classUnderTest.getGreeting("local"), "app should have a greeting");
     }
 
-    @Test void appQuotesHasMoreThanTwo() {
+    @Test void appQuotesHasMoreThanTwo() throws IOException, InterruptedException {
         App classUnderTest = new App();
-        classUnderTest.getGreeting();
+        classUnderTest.getGreeting("local");
         assertTrue(classUnderTest.quotes.stream().count()>=2, "App quotes should have more than 2 quotes");
     }
 
