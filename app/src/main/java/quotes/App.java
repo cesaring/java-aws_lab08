@@ -76,7 +76,7 @@ public class App {
 
 
 
-    public String getGreeting() throws IOException, InterruptedException {
+    public String getGreeting(String localOrApi) throws IOException, InterruptedException {
 
         try {
             quotesFileToQuotesArray( "./src/main/resources/recentquotes.json");
@@ -85,16 +85,20 @@ public class App {
         }
         String greeting = getRandomQuote(quotes);
         String apiResult = apiToQuote();
-        if(apiResult.length()>1){
-            greeting = apiResult;
+        System.out.println(localOrApi);
+        if (localOrApi.equals("api")) {
+            if(apiResult.length()>1){
+                greeting = apiResult;
+            }
         }
+
 
         return greeting;
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         System.out.println("Quote Of The Day:");
-        System.out.println(new App().getGreeting());
+        System.out.println(new App().getGreeting( args[0]));
 
     }
 }
